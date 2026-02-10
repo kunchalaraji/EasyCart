@@ -1,14 +1,26 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 const app = express();
-const PORT = 5000;
 
-// Test route
+app.use(express.json());
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected Successfully"))
+  .catch((err) =>
+    console.error("MongoDB connection failed:", err.message)
+  );
+
 app.get("/", (req, res) => {
-  res.send("Secure & Smart E-Commerce Backend is running 🚀");
+  res.send("EasyCart Backend Connected to MongoDB 🚀");
 });
 
-// Start server
+const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
